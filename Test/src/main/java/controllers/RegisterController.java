@@ -45,9 +45,7 @@ public class RegisterController extends HttpServlet {
 		   BeanUtils.populate(user, request.getParameterMap());
 		
 		   if (manager.isRegisterComplete(user)) {
-           		System.out.println("PRINT 1");
 			    List<String> errors = manager.validate(user);
-           		System.out.println("PRINT 2");
            		int longitud = errors.size();
                 if (longitud == 0) {
 			    // Afegir user en el cas que no estigui a la base de dades
