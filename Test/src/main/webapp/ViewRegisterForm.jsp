@@ -6,15 +6,13 @@
 <h2>Welcome!! </h2>
    
     <ul>
-    <!-- Checks of UserName i Email -->
-        <c:forEach var="error" items="${error}">
-            <li class="error">${error}</li>
+    <!-- Mostrar errores de UserName y Email -->
+    <c:if test="${not empty user.errors}">
+        <c:forEach var="error" items="${user.errors}">
+            <li class="error">${error.value}</li>
         </c:forEach>
-    </ul>
-    
-    <c:if test="${not empty errorMessage}">
-        <p style="color: red;"><%= request.getAttribute("errorMessage") %></p>
     </c:if>
+	</ul>
 
 
 <form action="RegisterController" method="POST">
@@ -41,7 +39,7 @@
                
      <p>
      	<label class="w3-text-red"><b> Confirm Password </b></label>
-        <input class="w3-input w3-border w3-light-grey" type="password" id="pwdc" name="pwdc" placeholder="Password" required
+        <input class="w3-input w3-border w3-light-grey" type="password" id="pwdc" name="pwdc" placeholder="Password" value="${user.pwd}" required
                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$"
                title="Please enter at least 6 characters, including 1 uppercase, 1 lowercase, and 1 digit">
                

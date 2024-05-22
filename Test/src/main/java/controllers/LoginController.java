@@ -33,41 +33,38 @@ public class LoginController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.print("LoginController: ");
+        
+        User user = new User();
+        UserManager manager = new UserManager();
+        String view = "ViewLoginForm.jsp";
+        
+        try {
+            BeanUtils.populate(user, request.getParameterMap());
+            
+            if (manager.isLoginComplete(user)) {
+            	
+                HttpSession session = request.getSession();
+                session.setAttribute("userName", user.getUserName());
+                session.setAttribute("roll", user.getRoll());
+                // Add all parameters!!
+                
+                System.out.println("Login successful, forwarding to ViewLoginDone ");
+                view = "ViewLoginDone.jsp";
+            } else {
+                System.out.println("User is not logged, forwarding to ViewLoginForm ");
+                request.setAttribute("user", user); // Cambiado de "login" a "user"
+            }
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+            dispatcher.forward(request, response);
+            
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
 
-		System.out.print("LoginController: ");
-		
-		User user = new User();
-		UserManager manager = new UserManager();
-		String view = "ViewLoginForm.jsp";
-		
-	    try {
-			
-	    	BeanUtils.populate(user, request.getParameterMap());
-			
-	    	if (manager.isLoginComplete(user)) {
-		    	
-	    		System.out.println("login OK, forwarding to ViewLoginDone ");
-		    	HttpSession session = request.getSession();
-		    	session.setAttribute("userName",user.getUserName());
-		    	view = "ViewLoginDone.jsp";
-			    
-		    } 
-			else {
-		     
-				System.out.println("user is not logged, forwarding to ViewLoginForm ");
-			    request.setAttribute("login",user);
-		    	
-		    }
-	    	
-	    	RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-		    dispatcher.forward(request, response);
-	    	
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
-	    
-	}
 		
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

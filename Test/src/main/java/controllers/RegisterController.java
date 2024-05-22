@@ -2,7 +2,8 @@ package controllers;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,43 +34,34 @@ public class RegisterController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.print("RegisterController: ");
 
-	   System.out.print("RegisterController: ");
-	   
-	   User user = new User();
-	   UserManager manager = new UserManager();
-	   String view = "ViewRegisterForm.jsp";
-		
-	   try {
-		   BeanUtils.populate(user, request.getParameterMap());
-		
-		   if (manager.isRegisterComplete(user)) {
-			    List<String> errors = manager.validate(user);
-           		int longitud = errors.size();
-                if (longitud == 0) {
-			    // Afegir user en el cas que no estigui a la base de dades
-                	 manager.addUser(user);
-				     System.out.println(" user ok, forwarding to ViewLoginForm");
-				     view = "ViewLoginForm.jsp";
-                } 
-                else {
-                	// Tornem a ensenyar la vista del formulari
-                	System.out.println(" forwarding to ViewRegisterForm");
-                	// Per tenir els errors i mostrar en el front 
-            		request.setAttribute("error", errors);
-            		// Per no haver de posar tots els parametres de nou
-                	request.setAttribute("user",user);
-                }	  
-		   }
-		   RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-		   dispatcher.forward(request, response);
-	   
-	   } catch (IllegalAccessException | InvocationTargetException e) {
-			e.printStackTrace();
-	   }
-		
-	}
+        User user = new User();
+        UserManager manager = new UserManager();
+        String view = "ViewRegisterForm.jsp";
+
+        try {
+            BeanUtils.populate(user, request.getParameterMap());
+
+            if (manager.isRegisterComplete(user)) {
+                // Añadir user en el caso que no esté en la base de datos
+                manager.addUser(user);
+                System.out.println("User ok, forwarding to ViewLoginForm");
+                view = "ViewLoginForm.jsp";
+            } else {
+                // Volver a mostrar la vista del formulario con los errores
+                System.out.println("Forwarding to ViewRegisterForm");
+                request.setAttribute("user", user);
+            }
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+            dispatcher.forward(request, response);
+
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

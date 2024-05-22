@@ -8,21 +8,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import models.User;
-
+//import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class MenuController
  */
-@WebServlet("/MenuController")
-public class MenuController extends HttpServlet {
+@WebServlet("/PostsController")
+public class PostsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MenuController() {
+    public PostsController() {
         super();
     }
 
@@ -30,35 +28,15 @@ public class MenuController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String view = "ViewMenuNotLogged.jsp"; 
-		System.out.print("MenuController: ");
-		HttpSession session = request.getSession();
 		
-		System.out.println(session.getAttribute("roll"));
-		System.out.println(session.getAttribute("roll"));
-		System.out.println(session.getAttribute("roll"));
-		System.out.println(session.getAttribute("roll"));
+		String view = "ViewPosts.jsp";
 		
-        
-		if (session.getAttribute("userName")!= null) {
-			if(session.getAttribute("roll").equals("Admin")) {
-				view = "ViewMenuLoggedAdmin.jsp";	
-				System.out.println("P");
-
-			}
-			else {
-				System.out.println("forwarding to ViewMenuLogged");
-				view = "ViewMenuLogged.jsp";
-			}
-
-		}
-		else {
-			
-			System.out.println("forwarding to ViewMenuNotLogged ");
-			
-		}
+		// request.setAttribute("menu","ViewMenuNotLogged.jsp");
 		
+		//request.setAttribute("content","ViewUsersRegistered.jsp");
+		
+		// HttpSession session = request.getSession();
+				
 		RequestDispatcher dispatcher = request.getRequestDispatcher(view);
 		dispatcher.forward(request, response);
 	}
