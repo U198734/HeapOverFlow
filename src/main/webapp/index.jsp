@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="imgs/upf.jpg">
+<link rel="icon" href="imgs/stack.jpg">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title> Lab 3 template </title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -27,7 +27,7 @@ $(document).ready(function(){
 <body>
 
  	<!-- Begin Navigation -->
- 	<div class="w3-bar w3-red" id="navigation">
+ 	<div class="w3-bar w3-blue" id="navigation">
     	<jsp:include page="${menu}" />
  	</div>
  	<!-- End Navigation -->

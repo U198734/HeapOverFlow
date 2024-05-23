@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.User;
+//import models.User;
 
 
 /**
@@ -35,17 +35,10 @@ public class MenuController extends HttpServlet {
 		System.out.print("MenuController: ");
 		HttpSession session = request.getSession();
 		
-		System.out.println(session.getAttribute("roll"));
-		System.out.println(session.getAttribute("roll"));
-		System.out.println(session.getAttribute("roll"));
-		System.out.println(session.getAttribute("roll"));
-		
-        
+		     
 		if (session.getAttribute("userName")!= null) {
 			if(session.getAttribute("roll").equals("Admin")) {
 				view = "ViewMenuLoggedAdmin.jsp";	
-				System.out.println("P");
-
 			}
 			else {
 				System.out.println("forwarding to ViewMenuLogged");

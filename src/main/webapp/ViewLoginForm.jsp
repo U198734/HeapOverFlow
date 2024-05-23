@@ -69,7 +69,7 @@
     <form action="LoginController" method="POST">
         <!-- Campo de usuario -->
         <div class="form-group">
-            <label for="user" class="w3-text-red">User id</label>
+            <label for="user" class="w3-text-blue">User id</label>
             <input type="text" id="user" name="userName" placeholder="Name" value="${user.userName}" required>
             <!-- Mostrar error de usuario -->
             <c:if test="${not empty user.errors and not empty user.errors['userName']}">
@@ -79,7 +79,7 @@
 
         <!-- Campo de contraseña -->
         <div class="form-group">
-            <label for="pwd" class="w3-text-red">Password</label>
+            <label for="pwd" class="w3-text-blue">Password</label>
             <input type="password" id="pwd" name="pwd" placeholder="Password" value="${user.pwd}" required>
             <!-- Mostrar error de contraseña -->
             <c:if test="${not empty user.errors and not empty user.errors['pwd']}">
@@ -93,6 +93,6 @@
         </c:if>
 
         <!-- Botón de enviar -->
-        <button type="submit" class="btn-submit" name="submit">Submit</button>
+    		<input class="w3-btn w3-blue" type="submit" name="sumbit" value="Submit">
     </form>
 </div>
