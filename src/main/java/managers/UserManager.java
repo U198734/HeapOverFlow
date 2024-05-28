@@ -4,6 +4,7 @@ package managers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 /*
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 */
+import java.util.List;
 
 import models.User;
 import utils.DBManager;
@@ -227,6 +229,33 @@ public class UserManager {
 
         return isComplete;
     }
+    
+    
+ // Método para obtener todos los usuarios
+    public List<User> getAllUsers() {
+        String query = "SELECT userName, mail, gender, lang, personalField, roll FROM usuaris ORDER BY userName ASC";
+        List<User> userList = new ArrayList<>();
+        try (PreparedStatement statement = db.prepareStatement(query);
+             ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User();
+                user.setUserName(rs.getString("userName"));
+                user.setMail(rs.getString("mail"));
+                user.setGender(rs.getString("gender"));
+                user.setLang(rs.getString("lang"));
+                user.setPersonalField(rs.getString("personalField"));
+                user.setRoll(rs.getString("roll"));
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Total users fetched: " + userList.size());
+        return userList;
+    }
+
+    
 	
 	private boolean hasValue(String val) {
 		return((val != null) && (!val.equals("")));
