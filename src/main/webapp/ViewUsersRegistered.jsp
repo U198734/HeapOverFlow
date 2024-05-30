@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Registrados</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: "Arial", sans-serif;
@@ -21,50 +23,54 @@
         h2 {
             color: #333;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .user-card {
+            position: relative;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        table, th, td {
-            border: 1px solid #ccc;
+        .user-card h3 {
+            margin-top: 0;
+            color: #007bff;
         }
-        th, td {
-            padding: 10px;
-            text-align: left;
+        .user-card p {
+            margin: 5px 0;
         }
-        th {
-            background-color: #f2f2f2;
+        .user-card span {
+            font-weight: bold;
+        }
+        .user-card .actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        .user-card .actions .fa {
+            margin-left: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Usuarios Registrados</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Gender</th>
-                    <th>Language</th>
-                    <th>Field</th>
-                    <th>Role</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="user" items="${users}">
-                    <tr>
-                        <td>${user.userName}</td>
-                        <td>${user.mail}</td>
-                        <td>${user.gender}</td>
-                        <td>${user.lang}</td>
-                        <td>${user.personalField}</td>
-                        <td>${user.roll}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <c:forEach var="user" items="${users}">
+            <div class="user-card">
+                <div class="actions">
+                    <i class="fas fa-edit" title="Edit User" onclick="editUser('${user.userName}')"></i>
+                    <i class="fas fa-trash" title="Delete User" onclick="deleteUser('${user.userName}')"></i>
+                </div>
+                <h3>${user.userName}</h3>
+                <p><span>Email:</span> ${user.mail}</p>
+                <p><span>Gender:</span> ${user.gender}</p>
+                <p><span>Language:</span> ${user.lang}</p>
+                <p><span>Field:</span> ${user.personalField}</p>
+                <p><span>Role:</span> ${user.roll}</p>
+            </div>
+        </c:forEach>
     </div>
+
 </body>
 </html>
