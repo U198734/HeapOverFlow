@@ -37,7 +37,7 @@
 
 <div class="container">
     <h2>Login Successful</h2>
-    <p class="message">Login for user ${sessionScope.userName} done!</p>
+    <p class="message">Login for user ${user.userName} done!</p>
 </div>
 
 

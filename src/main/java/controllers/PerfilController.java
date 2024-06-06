@@ -8,21 +8,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSession;
-//import models.User;
 
+import managers.UserManager;
+import models.User;
 
 /**
  * Servlet implementation class MenuController
  */
-@WebServlet("/MenuController")
-public class MenuController extends HttpServlet {
+@WebServlet("/PerfilController")
+public class PerfilController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MenuController() {
+    public PerfilController() {
         super();
     }
 
@@ -30,27 +32,19 @@ public class MenuController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String view = "ViewMenuNotLogged.jsp"; 
-		System.out.print("MenuController: ");
-		HttpSession session = request.getSession();
 		
-		// COMPROBAR SI ESXISTEIX U
-		if (session.getAttribute("userName")!= null) {
-			if(session.getAttribute("role").equals("Admin")) {
-				view = "ViewMenuLoggedAdmin.jsp";	
-			}
-			else {
-				System.out.println("forwarding to ViewMenuLogged");
-				view = "ViewMenuLogged.jsp";
-			}
-		}
-		else {
-			System.out.println("forwarding to ViewMenuNotLogged ");
-			
+		HttpSession session = request.getSession(false);
+		String username =  (String) session.getAttribute("userName");
+		User user = null;
+		
+		if (session != null) {
+			UserManager userManager = new UserManager();
+			user = userManager.getUserInfo(username);
+			userManager.finalize();
+			request.setAttribute("user",user);
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewPerfil.jsp");
 		dispatcher.forward(request, response);
 	}
 

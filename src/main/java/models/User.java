@@ -15,7 +15,7 @@ public class User implements java.io.Serializable {
 	private String pwd = "";
 	private String lang = "";
     private String personalField = "";
-    private String roll = "Regular";
+    private String role = "Regular";
     
     // Errors
 	private HashMap<String, String> errors;
@@ -56,8 +56,8 @@ public class User implements java.io.Serializable {
         return this.personalField;	 
     }
 	
-	public String getRoll() {
-		return this.roll;
+	public String getRole() {
+		return this.role;
 	}
 	   
 	
@@ -117,8 +117,8 @@ public class User implements java.io.Serializable {
     }
     
     // Set roll
-    public void setRoll(String roll) {
-    	this.roll = roll;
+    public void setRole(String role) {
+    	this.role = role;
 	}
 	
 	// ERRORS 

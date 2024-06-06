@@ -1,18 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuarios Registrados</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body {
-            font-family: "Arial", sans-serif;
-            background-color: #f0f0f0;
-            padding: 20px;
-        }
+        
         .container {
             max-width: 800px;
             margin: auto;
@@ -52,6 +48,28 @@
             cursor: pointer;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function deleteUser(userName) {
+            if (confirm('Are you sure you want to delete user ' + userName + '?')) {
+                $.ajax({
+                    url: 'UsersRegisteredController',
+                    type: 'POST',
+                    data: {
+                        action: 'delete',
+                        userName: userName
+                    },
+                    success: function(response) {
+                        // Refresh the list of users
+                        $(content).html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error deleting user: ' + error);
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -65,12 +83,11 @@
                 <h3>${user.userName}</h3>
                 <p><span>Email:</span> ${user.mail}</p>
                 <p><span>Gender:</span> ${user.gender}</p>
-                <p><span>Language:</span> ${user.lang}</p>
-                <p><span>Field:</span> ${user.personalField}</p>
-                <p><span>Role:</span> ${user.roll}</p>
+                <p><span>Programming Language:</span> ${user.lang}</p>
+                <p><span>Personal Field:</span> ${user.personalField}</p>
+                <p><span>Role:</span> ${user.role}</p>
             </div>
         </c:forEach>
     </div>
-
 </body>
-</html>
+

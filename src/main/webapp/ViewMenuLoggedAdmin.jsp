@@ -5,6 +5,8 @@
 <a class="menu w3-bar-item w3-button w3-hide-small" id="LogoutController" href=#> Logout </a>
 <a class="menu w3-bar-item w3-button w3-hide-small" id="PostsController" href=#> Posts </a>
 <a class="menu w3-bar-item w3-button w3-hide-small" id="UsersRegisteredController" href=#> Users Registerd </a>
+<a class="menu w3-bar-item w3-button w3-hide-small" id="PerfilController" href=#> Perfil </a>
+
 
 <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="stack()">&#9776;</a>
 
@@ -12,5 +14,6 @@
 	<a class="menu w3-bar-item w3-button" id="LogoutController" href=#> Logout </a>
 	<a class="menu w3-bar-item w3-button" id="PostsController" href=#> Posts </a>
 	<a class="menu w3-bar-item w3-button" id="UsersRegisteredController" href=#> Users Registerd </a>
+	<a class="menu w3-bar-item w3-button" id="PerfilController" href=#> Perfil </a>
 
 </div>

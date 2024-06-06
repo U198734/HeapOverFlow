@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
             	
                 HttpSession session = request.getSession();
                 session.setAttribute("userName", user.getUserName());
-                session.setAttribute("roll", user.getRoll());
+                session.setAttribute("role", user.getRole());
                 // Add all parameters!!
                 
                 System.out.println("Login successful, forwarding to ViewLoginDone ");

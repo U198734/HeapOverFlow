@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="imgs/stack.jpg">
+<link rel="icon" href="imgs/stack.png">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title> Lab 3 template </title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -21,6 +21,25 @@ $(document).ready(function(){
 		$('#content').load($(this).attr('action'),$(this).serialize());
 	    event.preventDefault();
 	});
+	
+	
+	
+	/* Add tweet */
+
+	
+	/* Delete tweet */
+
+	
+	
+	/* Follow user */
+
+	
+	/* UnFollow user */
+	
+	
+	/* Delete User*/
+	
+	
 });
 </script>
 </head>

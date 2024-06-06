@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Post;
+import models.Tweet;
 import utils.DBManager;
 
 
@@ -31,7 +31,7 @@ public class ManageTweets {
 	}
 	
 	/* Add a tweet */
-	public void addTweet(Post tweet) {
+	public void addTweet(Tweet tweet) {
 		String query = "INSERT INTO tweets (id,postdatetime,content) VALUES (?,?,?)";
 		PreparedStatement statement = null;
 		try {
@@ -63,10 +63,10 @@ public class ManageTweets {
 	
 	
 	/* Get tweets from a user given start and end*/
-	public List<Post> getUserTweets(Integer uid,Integer start, Integer end) {
+	public List<Tweet> getUserTweets(Integer uid,Integer start, Integer end) {
 		 String query = "SELECT tweets.id,tweets.uid,tweets.postdatetime,tweets.content,users.name FROM tweets INNER JOIN users ON tweets.uid = users.id where tweets.uid = ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
-		 List<Post> l = new ArrayList<Post>();
+		 List<Tweet> l = new ArrayList<Tweet>();
 		 try {
 			 statement = db.prepareStatement(query);
 			 statement.setInt(1,uid);
@@ -74,7 +74,7 @@ public class ManageTweets {
 			 statement.setInt(3,end);
 			 ResultSet rs = statement.executeQuery();
 			 while (rs.next()) {
-				 Post tweet = new Post();
+				 Tweet tweet = new Tweet();
        		     tweet.setId(rs.getInt("id"));
 				 // tweet.setUid(rs.getInt("uid")); --> Mirar que fer
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
