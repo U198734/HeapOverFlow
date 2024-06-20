@@ -68,8 +68,8 @@
 
     <form action="RegisterController" method="POST">
         <div class="form-group">
-            <label for="user" class="w3-text-blue"><b>User id</b></label>
-            <input type="text" id="user" name="userName" placeholder="Name" value="${model.userName}" required pattern="[a-zA-Z0-9]+" title="The username can only contain letters and numbers.">
+            <label for="user" class="w3-text-blue"><b>User Name</b></label>
+            <input type="text" id="user" name="user_name" placeholder="Name" value="${model.user_name}" required pattern="[a-zA-Z0-9]+" title="The username can only contain letters and numbers.">
         </div>
         
         <div class="form-group">
@@ -100,30 +100,32 @@
         
         <div class="form-group">
             <label for="lang" class="w3-text-blue"><b>Programming Language</b></label>
-            <select id="lang" name="lang">
-                <option value="Other" ${model.lang1 == 'Other' ? 'selected' : ''}>Other</option>
-                <option value="Python" ${model.lang1 == 'Python' ? 'selected' : ''}>Python</option>
-                <option value="Java" ${model.lang1 == 'Java' ? 'selected' : ''}>Java</option>
-                <option value="C++" ${model.lang1 == 'C++' ? 'selected' : ''}>C++</option>
-                <option value="C#" ${model.lang1 == 'C#' ? 'selected' : ''}>C#</option>
-                <option value="TypeScript" ${model.lang1 == 'TypeScript' ? 'selected' : ''}>TypeScript</option>
-                <option value="PHP" ${model.lang1 == 'PHP' ? 'selected' : ''}>PHP</option>
-                <option value="Swift" ${model.lang1 == 'Swift' ? 'selected' : ''}>Swift</option>
-                <option value="Ruby" ${model.lang1 == 'Ruby' ? 'selected' : ''}>Ruby</option>
-                <option value="Go" ${model.lang1 == 'Go' ? 'selected' : ''}>Go</option>
-                <option value="JavaScript" ${model.lang1 == 'JavaScript' ? 'selected' : ''}>JavaScript</option>
+            <select id="programming_language" name="programming_language">
+                <option value="Other"      ${user.programming_language == 'Other' ? 'selected' : ''}>Other</option>
+                <option value="Python"     ${user.programming_language == 'Python' ? 'selected' : ''}>Python</option>
+                <option value="Java"       ${user.programming_language == 'Java' ? 'selected' : ''}>Java</option>
+                <option value="C++"        ${user.programming_language == 'C++' ? 'selected' : ''}>C++</option>
+                <option value="C#"         ${user.programming_language == 'C#' ? 'selected' : ''}>C#</option>
+                <option value="TypeScript" ${user.programming_language == 'TypeScript' ? 'selected' : ''}>TypeScript</option>
+                <option value="PHP"        ${user.programming_language == 'PHP' ? 'selected' : ''}>PHP</option>
+                <option value="Swift"      ${user.programming_language == 'Swift' ? 'selected' : ''}>Swift</option>
+                <option value="Ruby"       ${user.programming_language == 'Ruby' ? 'selected' : ''}>Ruby</option>
+                <option value="Go"         ${user.programming_language == 'Go' ? 'selected' : ''}>Go</option>
+                <option value="JavaScript" ${user.programming_language == 'JavaScript' ? 'selected' : ''}>JavaScript</option>
+           		<!-- Tenia toc ho havia de posar recte -->
+           		
             </select>
         </div>
         
         <div class="form-group">
             <label for="personalField" class="w3-text-blue"><b>Profession/Interest</b></label>
             <select id="personalField" name="personalField">
-                <option value="Other" ${model.personalField == 'Other' ? 'selected' : ''}>Other</option>
-                <option value="Machine Learning" ${model.personalField == 'Machine Learning' ? 'selected' : ''}>Machine Learning</option>
-                <option value="Natural Language Processing" ${model.personalField == 'Natural Language Processing' ? 'selected' : ''}>Natural Language Processing</option>
-                <option value="Computer Vision" ${model.personalField == 'Computer Vision' ? 'selected' : ''}>Computer Vision</option>
-                <option value="Reinforcement Learning" ${model.personalField == 'Reinforcement Learning' ? 'selected' : ''}>Reinforcement Learning</option>
-                <option value="Deep Learning" ${model.personalField == 'Deep Learning' ? 'selected' : ''}>Deep Learning</option>
+                <option value="Other" 			 			${user.professional_field == 'Other' ? 'selected' : ''}>Other</option>
+                <option value="Machine Learning" 			${user.professional_field == 'Machine Learning' ? 'selected' : ''}>Machine Learning</option>
+                <option value="Natural Language Processing" ${user.professional_field == 'Natural Language Processing' ? 'selected' : ''}>Natural Language Processing</option>
+                <option value="Computer Vision" 			${user.professional_field == 'Computer Vision' ? 'selected' : ''}>Computer Vision</option>
+                <option value="Reinforcement Learning" 		${user.professional_field == 'Reinforcement Learning' ? 'selected' : ''}>Reinforcement Learning</option>
+                <option value="Deep Learning" 				${user.professional_field == 'Deep Learning' ? 'selected' : ''}>Deep Learning</option>
             </select>
         </div>
         
@@ -135,7 +137,7 @@
 
 <script>
     const form = document.getElementById("regform");
-    const userName = document.getElementById("user");
+    //const user_name = document.getElementById("user");
     const pwd = document.getElementById("pwd");
     const pwdc = document.getElementById("pwdc");
 

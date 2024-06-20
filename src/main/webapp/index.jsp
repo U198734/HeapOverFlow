@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript">
+
+
+// Para actualizar la vista de JSP de los users registrados
+ 
 $(document).ready(function(){
 	$.ajaxSetup({ cache: false }); //Avoids caching!	
 	$(document).on("click",".menu", function(event) {
@@ -21,6 +25,9 @@ $(document).ready(function(){
 		$('#content').load($(this).attr('action'),$(this).serialize());
 	    event.preventDefault();
 	});
+	
+	
+	
 	
 	
 	
@@ -38,6 +45,8 @@ $(document).ready(function(){
 	
 	
 	/* Delete User*/
+	
+	
 	
 	
 });

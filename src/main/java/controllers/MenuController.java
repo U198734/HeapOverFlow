@@ -36,7 +36,7 @@ public class MenuController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		// COMPROBAR SI ESXISTEIX U
-		if (session.getAttribute("userName")!= null) {
+		if (session.getAttribute("user_name")!= null) {
 			if(session.getAttribute("role").equals("Admin")) {
 				view = "ViewMenuLoggedAdmin.jsp";	
 			}

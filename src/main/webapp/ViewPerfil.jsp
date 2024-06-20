@@ -42,12 +42,12 @@
 <body>
     <div class="container">
         <h2>PERFIL</h2>
-        <h3>Hola  ${user.userName}!</h3>
+        <h3>Hola  ${user.user_name}!</h3>
         <div class="user-card">
             <p><span>Email:</span> ${user.mail}</p>
             <p><span>Gender:</span> ${user.gender}</p>
-            <p><span>Programming Language:</span> ${user.lang}</p>
-            <p><span>Personal Field:</span> ${user.personalField}</p>
+            <p><span>Programming Language:</span> ${user.programming_language}</p>
+            <p><span>Personal Field:</span> ${user.professional_field}</p>
         </div>
     </div>
 </body>

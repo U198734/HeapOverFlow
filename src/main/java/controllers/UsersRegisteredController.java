@@ -38,7 +38,6 @@ public class UsersRegisteredController extends HttpServlet {
         HttpSession session = request.getSession(false);
         //User currentUser = (User) session.getAttribute("user");
         
-		
 
         try {
         	if (session != null) {
@@ -67,14 +66,14 @@ public class UsersRegisteredController extends HttpServlet {
         UserManager manager = new UserManager();
 
         if ("delete".equals(action)) {
-            String userName = request.getParameter("userName");
+            String userName = request.getParameter("user_name");
             if (userName != null) {
                 manager.deleteUserByUserName(userName);
                 response.sendRedirect("UsersRegisteredController");
                 //RequestDispatcher dispatcher = request.getRequestDispatcher("UsersRegisteredController");
                 //dispatcher.forward(request, response);
             }
-        }
+        } 
         
     }
 

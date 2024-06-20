@@ -34,7 +34,7 @@ public class PerfilController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		String username =  (String) session.getAttribute("userName");
+		String username =  (String) session.getAttribute("user_name");
 		User user = null;
 		
 		if (session != null) {

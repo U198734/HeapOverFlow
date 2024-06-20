@@ -43,7 +43,10 @@ public class RegisterController extends HttpServlet {
 
         try {
             BeanUtils.populate(user, request.getParameterMap());
-
+            //User existingUser = manager.getUserInfo(user.getUserName());
+            
+        
+        	// If user doesn't exist, register new user
             if (manager.isRegisterComplete(user)) {
                 // Añadir user en el caso que no esté en la base de datos
                 manager.addUser(user);
@@ -53,8 +56,8 @@ public class RegisterController extends HttpServlet {
                 // Volver a mostrar la vista del formulario con los errores
                 System.out.println("Forwarding to ViewRegisterForm");
                 request.setAttribute("user", user);
-            }
-
+	            }
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher(view);
             dispatcher.forward(request, response);
 

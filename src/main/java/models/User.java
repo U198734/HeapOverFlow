@@ -9,12 +9,12 @@ public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// Parametres
-	private String userName = "";
+	private String user_name = "";
 	private String mail = "";
 	private String gender = "";
 	private String pwd = "";
-	private String lang = "";
-    private String personalField = "";
+	private String programming_language = "";
+    private String professional_field = "Other";
     private String role = "Regular";
     
     // Errors
@@ -27,8 +27,8 @@ public class User implements java.io.Serializable {
 	
 	/* --- GETTERS ---*/
 	// UserName
-	public String getUserName(){
-		return userName;
+	public String getUser_name(){
+		return user_name;
 	}
 	
 	// Mail
@@ -47,13 +47,13 @@ public class User implements java.io.Serializable {
 	}
 	
 	// Programming Language
-	public String getLang() {
-        return this.lang;
+	public String getProgramming_language() {
+        return this.programming_language;
     }
 	
 	// Personal Field
-	public String getPersonalField() {
-        return this.personalField;	 
+	public String getProfessional_field() {
+        return this.professional_field;	 
     }
 	
 	public String getRole() {
@@ -64,12 +64,12 @@ public class User implements java.io.Serializable {
 	/*  --- SETTERS --- */
 	
 	// UserName 
-	public void setUserName(String user) {
+	public void setUser_name(String user_name) {
 	    // Validem que nomes tingui lletres amb numeros
 	    String pattern = "^[a-zA-Z0-9]+$";
-	    if (user.matches(pattern)) {
-	        this.userName = user;
-	        System.out.println(user);
+	    if (user_name.matches(pattern)) {
+	        this.user_name = user_name;
+	        System.out.println(user_name);
 	    } else {
 	        System.err.println("El nombre de usuario debe contener solo letras y números.");
 	    }
@@ -107,13 +107,13 @@ public class User implements java.io.Serializable {
 	}
 	
 	// Programming Language
-	public void setLang(String lang) {
-        this.lang = lang;
+	public void setProgramming_language(String programming_language) {
+        this.programming_language = programming_language;
     }
 	
 	// Personal Field
-    public void setPersonalField(String personalField) {
-        this.personalField = personalField;
+    public void setProfessional_field(String professional_field) {
+        this.professional_field = professional_field;
     }
     
     // Set roll

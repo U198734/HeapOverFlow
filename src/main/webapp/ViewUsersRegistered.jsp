@@ -49,15 +49,16 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
     <script>
-        function deleteUser(userName) {
-            if (confirm('Are you sure you want to delete user ' + userName + '?')) {
+        function deleteUser(user_name) {
+            if (confirm('Are you sure you want to delete user ' + user_name + '?')) {
                 $.ajax({
                     url: 'UsersRegisteredController',
                     type: 'POST',
                     data: {
                         action: 'delete',
-                        userName: userName
+                        user_name: user_name
                     },
                     success: function(response) {
                         // Refresh the list of users
@@ -69,7 +70,9 @@
                 });
             }
         }
-    </script>
+        
+        
+    </script>  
 </head>
 <body>
     <div class="container">
@@ -77,14 +80,18 @@
         <c:forEach var="user" items="${users}">
             <div class="user-card">
                 <div class="actions">
-                    <i class="fas fa-edit" title="Edit User" onclick="editUser('${user.userName}')"></i>
-                    <i class="fas fa-trash" title="Delete User" onclick="deleteUser('${user.userName}')"></i>
+                	<!-- <i class="fas fa-edit" title="Edit User" onclick="editUser('${user.user_name}')"></i>
+                    <i class="fas fa-trash" title="Delete User" onclick="deleteUser('${user.user_name}')"></i>  --> 
+                	<button class="w3-button w3-red" onclick="editUser('${user.user_name}')">Edit</button>
+           			<button class="w3-button w3-blue" onclick="deleteUser('${user.user_name}')">Delete</button>
+                    
+                    
                 </div>
-                <h3>${user.userName}</h3>
+                <h3>${user.user_name}</h3>
                 <p><span>Email:</span> ${user.mail}</p>
                 <p><span>Gender:</span> ${user.gender}</p>
-                <p><span>Programming Language:</span> ${user.lang}</p>
-                <p><span>Personal Field:</span> ${user.personalField}</p>
+                <p><span>Programming Language:</span> ${user.programming_language}</p>
+                <p><span>Personal Field:</span> ${user.professional_field}</p>
                 <p><span>Role:</span> ${user.role}</p>
             </div>
         </c:forEach>

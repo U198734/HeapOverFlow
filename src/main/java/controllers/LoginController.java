@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
             if (manager.isLoginComplete(user)) {
             	
                 HttpSession session = request.getSession();
-                session.setAttribute("userName", user.getUserName());
+                session.setAttribute("user_name", user.getUser_name());
                 session.setAttribute("role", user.getRole());
                 // Add all parameters!!
                 

@@ -69,11 +69,11 @@
     <form action="LoginController" method="POST">
         <!-- Campo de usuario -->
         <div class="form-group">
-            <label for="user" class="w3-text-blue">User id</label>
-            <input type="text" id="user" name="userName" placeholder="Name" value="${user.userName}" required>
+            <label for="user" class="w3-text-blue">User name</label>
+            <input type="text" id="user" name="user_name" placeholder="Name" value="${user.user_name}" required>
             <!-- Mostrar error de usuario -->
-            <c:if test="${not empty user.errors and not empty user.errors['userName']}">
-                <div class="error">${user.errors['userName']}</div>
+            <c:if test="${not empty user.errors and not empty user.errors['user_name']}">
+                <div class="error">${user.errors['user_name']}</div>
             </c:if>
         </div>
 

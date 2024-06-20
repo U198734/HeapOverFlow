@@ -35,13 +35,13 @@ public class UserManager {
 	// FUNCIONS PEL REGISTRE
 	
 	// Comprobamos que el usuario no esté ocupado
-    public boolean isUserNameTaken(String userName) {
-        String query = "SELECT COUNT(*) AS count FROM usuaris WHERE userName = ?";
+    public boolean isUserNameTaken(String user_name) {
+        String query = "SELECT COUNT(*) AS count FROM usuaris WHERE user_name = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = db.prepareStatement(query);
-            statement.setString(1, userName);
+            statement.setString(1, user_name);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
@@ -88,16 +88,16 @@ public class UserManager {
 
     // Añadir un nuevo usuario
     public void addUser(User user) {
-        String query = "INSERT INTO usuaris (userName, mail, gender, pwd, lang, personalField, role) VALUES (?,?,?,?,?,?,?)";
+        String query = "INSERT INTO usuaris (user_name, mail, gender, pwd, programming_language, professional_field, role) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement statement = null; // para evitar ataques de SQL
         try {
             statement = db.prepareStatement(query);
-            statement.setString(1, user.getUserName());
+            statement.setString(1, user.getUser_name());
             statement.setString(2, user.getMail());
             statement.setString(3, user.getGender());
             statement.setString(4, user.getPwd());
-            statement.setString(5, user.getLang());
-            statement.setString(6, user.getPersonalField());
+            statement.setString(5, user.getProgramming_language());
+            statement.setString(6, user.getProfessional_field());
             statement.setString(7, user.getRole());
 
             
@@ -115,11 +115,11 @@ public class UserManager {
         // Limpiar errores previos
         user.getErrors().clear();
 
-        if (!hasValue(user.getUserName())) {
-            user.setError("userName", "ERROR - User name is required.");
+        if (!hasValue(user.getUser_name())) {
+            user.setError("user_name", "ERROR - User name is required.");
             isComplete = false;
-        } else if (isUserNameTaken(user.getUserName())) {
-            user.setError("userName", "WARNING - Provided user name already exists in our database.");
+        } else if (isUserNameTaken(user.getUser_name())) {
+            user.setError("user_name", "WARNING - Provided user name already exists in our database.");
             isComplete = false;
         }
 
@@ -142,13 +142,13 @@ public class UserManager {
 	
     // FUNCIONS PEL LOGIN 
     // Comprovem que existeixi el UserName i que la contrasenya sigui la corresponent en el UserName
-    public boolean validateLogin(String userName, String pwd) {
-        String query = "SELECT pwd FROM usuaris WHERE userName = ?";
+    public boolean validateLogin(String user_name, String pwd) {
+        String query = "SELECT pwd FROM usuaris WHERE user_name = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = db.prepareStatement(query);
-            statement.setString(1, userName);
+            statement.setString(1, user_name);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String storedPwd = resultSet.getString("pwd");
@@ -170,13 +170,13 @@ public class UserManager {
     
     // Funcio per agafar el role de la base de datos
     
-    public String getUserRole(String userName) {
-        String query = "SELECT role FROM usuaris WHERE userName = ?";
+    public String getUserRole(String user_name) {
+        String query = "SELECT role FROM usuaris WHERE user_name = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = db.prepareStatement(query);
-            statement.setString(1, userName);
+            statement.setString(1, user_name);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getString("role");
@@ -205,8 +205,8 @@ public class UserManager {
         user.getErrors().clear(); // Netegem la variable
 
         // Comprovacions del backend
-        if (!hasValue(user.getUserName())) {
-            user.setError("userName", "ERROR - User name is required.");
+        if (!hasValue(user.getUser_name())) {
+            user.setError("user_name", "ERROR - User name is required.");
             isComplete = false;
         }
 
@@ -216,13 +216,13 @@ public class UserManager {
         }
         // Cridem a la funcio que hem creat per aixi validar que hi ha un user amb aquella contra
         if (isComplete) {
-            if (!validateLogin(user.getUserName(), user.getPwd())) {
+            if (!validateLogin(user.getUser_name(), user.getPwd())) {
                 user.setError("login", "Invalid username or password.");
                 isComplete = false;
             }
             else {
-            	user.setRole(getUserRole(user.getUserName()));
-                System.out.println(getUserRole(user.getUserName()));
+            	user.setRole(getUserRole(user.getUser_name()));
+                System.out.println(getUserRole(user.getUser_name()));
 
             }
         }
@@ -233,18 +233,18 @@ public class UserManager {
     
  // Método para obtener todos los usuarios
     public List<User> getAllUsers() {
-        String query = "SELECT userName, mail, gender, lang, personalField, role FROM usuaris ORDER BY userName ASC";
+        String query = "SELECT user_name, mail, gender, programming_language, professional_field, role FROM usuaris ORDER BY user_name ASC";
         List<User> userList = new ArrayList<>();
         try (PreparedStatement statement = db.prepareStatement(query);
              ResultSet rs = statement.executeQuery()) {
 
             while (rs.next()) {
                 User user = new User();
-                user.setUserName(rs.getString("userName"));
+                user.setUser_name(rs.getString("user_name"));
                 user.setMail(rs.getString("mail"));
                 user.setGender(rs.getString("gender"));
-                user.setLang(rs.getString("lang"));
-                user.setPersonalField(rs.getString("personalField"));
+                user.setProgramming_language(rs.getString("programming_language"));
+                user.setProfessional_field(rs.getString("professional_field"));
                 user.setRole(rs.getString("role"));
                 userList.add(user);
             }
@@ -257,12 +257,12 @@ public class UserManager {
 
     
  // Nuevo método para eliminar usuario por username
-    public void deleteUserByUserName(String userName) {
-        String query = "DELETE FROM usuaris WHERE userName = ?";
+    public void deleteUserByUserName(String user_name) {
+        String query = "DELETE FROM usuaris WHERE user_name = ?";
         PreparedStatement statement = null;
         try {
             statement = db.prepareStatement(query);
-            statement.setString(1, userName);
+            statement.setString(1, user_name);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -282,22 +282,22 @@ public class UserManager {
 	
 	
 	/* INFO DEL USUARI*/
-	public User getUserInfo(String userName) {
-	    String query = "SELECT userName, mail, gender, lang, personalField FROM usuaris WHERE userName = ?;";
+	public User getUserInfo(String user_name) {
+	    String query = "SELECT user_name, mail, gender, programming_language, professional_field FROM usuaris WHERE user_name = ?;";
 	    PreparedStatement statement = null;
 	    ResultSet rs = null;
 	    User user = null;
 	    try {
 	        statement = db.prepareStatement(query);
-	        statement.setString(1, userName);
+	        statement.setString(1, user_name);
 	        rs = statement.executeQuery();
 	        if (rs.next()) {
 	            user = new User();
-	            user.setUserName(rs.getString("userName"));
+	            user.setUser_name(rs.getString("user_name"));
 	            user.setMail(rs.getString("mail"));
 	            user.setGender(rs.getString("gender"));
-	            user.setLang(rs.getString("lang"));
-	            user.setPersonalField(rs.getString("personalField"));
+	            user.setProgramming_language(rs.getString("programming_language"));
+	            user.setProfessional_field(rs.getString("professional_field"));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -312,7 +312,26 @@ public class UserManager {
 	    return user;
 	}
 
+	// ACTUALIZAR DATOS DE USUARIO
 	
+	public boolean updateUser(User user) {
+	    String query = "UPDATE usuaris SET mail = ?, gender = ?, programming_language = ?, professional_field = ? WHERE user_name = ?";
+	    PreparedStatement statement = null;
+	    try {
+	        statement = db.prepareStatement(query);
+	        statement.setString(1, user.getMail());
+	        statement.setString(2, user.getGender());
+	        statement.setString(3, user.getProgramming_language());
+	        statement.setString(4, user.getProfessional_field());
+	        statement.setString(5, user.getUser_name());
+	        int rowsUpdated = statement.executeUpdate();
+	        statement.close();
+	        return rowsUpdated > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 	
 	
 }
