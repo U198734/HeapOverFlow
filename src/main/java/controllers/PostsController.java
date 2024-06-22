@@ -1,6 +1,10 @@
+
+// GESTIONAR LAS PETICIONES DEPENDIENDO DE SI ESTAN LOGEADOS O NO. CLASE DE REFERENCIA EN EL TEMPLATE: GetUserTweets.java
+
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
+
+import models.Post;
+import managers.PostManager;
 
 /**
  * Servlet implementation class MenuController
@@ -29,15 +36,10 @@ public class PostsController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String view = "ViewPosts.jsp";
-		
-		// request.setAttribute("menu","ViewMenuNotLogged.jsp");
-		
-		//request.setAttribute("content","ViewUsersRegistered.jsp");
-		
-		// HttpSession session = request.getSession();
-				
-		RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+		PostManager postManager = new PostManager();
+		List<Post> posts = postManager.get_dummy_posts();
+		request.setAttribute("posts", posts);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewPosts.jsp");
 		dispatcher.forward(request, response);
 	}
 

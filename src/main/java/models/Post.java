@@ -1,44 +1,59 @@
 package models;
 import java.sql.Timestamp;
 
+
+// ACABAR DE IMPLEMENTAR GETTERS Y SETTERS. CLASE DE REFERENCIA EN EL TEMPLATE Tweet.java
+
+
+
 public class Post implements java.io.Serializable {
 
 	 private static final long serialVersionUID = 1L;
 
-	 private int id;
-	 // private int uid; --> no el farem servir
-	 private String uname;
+	 private int parentId;
+	 private int postId; 
+	 private String username;
+	 private String description;
+	 private String url;
+	 private String programmingLanguage;
+	 private String professionalField;
 	 private Timestamp postDateTime;
-	 private String content;
 
 	 public Post() {
 	 }
+	 
+	 public Integer getParentId() {
+		 return this.parentId;
+	 }
+	 
+	 public void setParentId(Integer parentId) {
+		 this.parentId = parentId;
+	 }
 
-	 public Integer getId() {
-		 return this.id;
+	 public Integer getPostId() {
+		 return this.postId;
 	 }
 	 
-	 public void setId(Integer id) {
-		 this.id = id;
+	 public void setPostId(Integer postId) {
+		 this.postId = postId;
+	 }
+	 
+	 public String getUsername() {
+		 return this.username;
+	 }
+	 
+	 public void setUsername(String username) {
+		 this.username = username;
 	 }
 
-	 /*
-	  * No ho farem servir ara
-	 public int getUid() {
-		 return this.uid;
+	 public String getDescription() {
+		 return this.description;
 	 }
 	 
-	 public void setUid(int uid) {
-		 this.uid = uid;
-	 }
-	 */
-	 public String getUname() {
-		 return this.uname;
+	 public void setDescription(String description) {
+		 this.description = description;
 	 }
 	 
-	 public void setUname(String uname) {
-		 this.uname = uname;
-	 }
 	 
 	 public Timestamp getPostDateTime() {
 		 return this.postDateTime;
@@ -47,11 +62,5 @@ public class Post implements java.io.Serializable {
 		 this.postDateTime = postDateTime;
 	 }
 	 
-	 public String getContent() {
-		 return this.content;
-	 }
-	 public void setContent(String content) {
-		 this.content = content;
-	 }
 
 }
