@@ -9,6 +9,7 @@ public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// Parametres
+	private int user_id;
 	private String user_name = "";
 	private String mail = "";
 	private String gender = "";

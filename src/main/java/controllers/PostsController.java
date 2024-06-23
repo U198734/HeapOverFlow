@@ -39,7 +39,7 @@ public class PostsController extends HttpServlet {
 		PostManager postManager = new PostManager();
 		List<Post> posts = postManager.get_dummy_posts();
 		request.setAttribute("posts", posts);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewOwnPosts.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewPostsNotLogged.jsp");
 		dispatcher.forward(request, response);
 	}
 

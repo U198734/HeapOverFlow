@@ -10,6 +10,8 @@ public class Post implements java.io.Serializable {
 
 	 private static final long serialVersionUID = 1L;
 
+	 private boolean is_public;
+	 private int userId;
 	 private int parentId;
 	 private int postId; 
 	 private String username;
