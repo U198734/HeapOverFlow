@@ -1,6 +1,3 @@
-
-// IMPLEMENTAR TODOS LOS METODOS DE CONEXION CON LA BASE DE DATOS. CLASE DE REFERENCIA EN EL TEMPLATE: ManageTweets.java
-
 package managers;
 
 import java.sql.PreparedStatement;
@@ -13,10 +10,9 @@ import java.sql.Timestamp;
 import models.Post;
 import utils.DBManager;
 
-
 public class PostManager {
 	
-	private DBManager db = null ;
+	private DBManager db = null;
 	
 	public PostManager() {
 		try {
@@ -36,34 +32,34 @@ public class PostManager {
         }
     }
     
+    
     public List<Post> getPublicPosts() {
         String query = "SELECT * FROM posts WHERE is_public = true ORDER BY postdatetime DESC";
         List<Post> posts = new ArrayList<>();
         try (PreparedStatement statement = db.prepareStatement(query);
-             ResultSet rs = statement.executeQuery()) {
-
+            ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
                 Post post = new Post();
-                post.setPostId(rs.getInt("id"));
-                // post.setPublic(rs.getBoolean("is_public"));
-                // post.setUserId(rs.getInt("user_id"));
-                post.setPostDateTime(rs.getTimestamp("postdatetime"));
-                post.setDescription(rs.getString("post_description"));
-                post.setUrl(rs.getString("url"));
-                post.setProgrammingLanguage(rs.getString("programmingLanguage"));
-                post.setProfessionalField(rs.getString("professionalField"));
+                
                 post.setParentId(rs.getInt("pid"));
+                post.setPostId(rs.getInt("id"));
+                post.setUsername(getUsername(rs.getInt("user_id")));
+                post.setDescription(rs.getString("post_description"));
+                post.setPostDateTime(rs.getTimestamp("postdatetime"));
+	   			post.setUrl(rs.getString("url"));
+	   			post.setProgrammingLanguage(rs.getString("programming_language"));
+	   			post.setProfessionalField(rs.getString("professional_field"));
+	   			
                 posts.add(post);
+                
+                
             }
-            
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return posts;
     }
 
-    // Method to fetch all private posts from the database
     public List<Post> getPrivatePosts() {
         String query = "SELECT * FROM posts WHERE is_public = false ORDER BY postdatetime DESC";
         List<Post> posts = new ArrayList<>();
@@ -72,41 +68,41 @@ public class PostManager {
 
             while (rs.next()) {
                 Post post = new Post();
-                post.setPostId(rs.getInt("id"));
-                // post.setPublic(rs.getBoolean("is_public"));
-                // post.setUserId(rs.getInt("user_id"));
-                post.setPostDateTime(rs.getTimestamp("postdatetime"));
-                post.setDescription(rs.getString("post_description"));
-                post.setUrl(rs.getString("url"));
-                post.setProgrammingLanguage(rs.getString("programmingLanguage"));
-                post.setProfessionalField(rs.getString("professionalField"));
+
                 post.setParentId(rs.getInt("pid"));
+                post.setPostId(rs.getInt("id"));
+                post.setUsername(getUsername(rs.getInt("user_id")));
+                post.setDescription(rs.getString("post_description"));
+                post.setPostDateTime(rs.getTimestamp("postdatetime"));
+	   			post.setUrl(rs.getString("url"));
+	   			post.setProgrammingLanguage(rs.getString("programming_language"));
+	   			post.setProfessionalField(rs.getString("professional_field"));
+	   			
                 posts.add(post);
             }
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return posts;
     }
 
-    // Method to add a new post to the database
     public void addPost(Post post) {
-        String query = "INSERT INTO posts (public, user_id, postdatetime, content, pid) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO posts (is_public, user_id, postdatetime, post_description, url, programmingLanguage, professionalField, pid) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = db.prepareStatement(query)) {
-            // statement.setBoolean(1, post.isPublic());
-            // statement.setInt(2, post.getUserId());
+            statement.setBoolean(1, post.getIsPublic());
+            statement.setInt(2, post.getUserId());
             statement.setTimestamp(3, post.getPostDateTime());
             statement.setString(4, post.getDescription());
             statement.setString(5, post.getUrl());
-            statement.setInt(6, post.getParentId());
+            statement.setString(6, post.getProgrammingLanguage());
+            statement.setString(7, post.getProfessionalField());
+            statement.setInt(8, post.getParentId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Method to delete a post from the database
     public void deletePost(int postId) {
         String query = "DELETE FROM posts WHERE id = ?";
         try (PreparedStatement statement = db.prepareStatement(query)) {
@@ -117,23 +113,24 @@ public class PostManager {
         }
     }
 
-    // Method to update an existing post in the database
     public void updatePost(Post post) {
-        String query = "UPDATE posts SET public = ?, user_id = ?, postdatetime = ?, content = ?, pid = ? WHERE id = ?";
+        String query = "UPDATE posts SET is_public = ?, user_id = ?, postdatetime = ?, post_description = ?, url = ?, programmingLanguage = ?, professionalField = ?, pid = ? WHERE id = ?";
         try (PreparedStatement statement = db.prepareStatement(query)) {
-            // statement.setBoolean(1, post.isPublic());
-            // statement.setInt(2, post.getUserId());
+            statement.setBoolean(1, post.getIsPublic());
+            statement.setInt(2, post.getUserId());
             statement.setTimestamp(3, post.getPostDateTime());
             statement.setString(4, post.getDescription());
             statement.setString(5, post.getUrl());
-            statement.setInt(6, post.getParentId());
+            statement.setString(6, post.getProgrammingLanguage());
+            statement.setString(7, post.getProfessionalField());
+            statement.setInt(8, post.getParentId());
+            statement.setInt(9, post.getPostId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-	
+    
 	public List<Post> get_dummy_posts() {
 		 List<Post> l = new ArrayList<Post>();
 		 
@@ -165,9 +162,12 @@ public class PostManager {
 			 l.add(second_dummy_post);
 		 }
 	
-		return  l;
+		return l;
 	}
 	
-	
-	
+    // Dummy method to get username by user_id, implement accordingly
+    private String getUsername(int userId) {
+        // Implementation to get username from user_id
+        return "dummy_username";
+    }
 }
