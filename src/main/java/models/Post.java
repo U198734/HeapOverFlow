@@ -62,5 +62,29 @@ public class Post implements java.io.Serializable {
 		 this.postDateTime = postDateTime;
 	 }
 	 
+	 public String getUrl() {
+		 return this.url;
+	 }
+	 
+	 public void setUrl(String url) {
+		 this.url = url;
+	 }
+	 
+	 public String getProgrammingLanguage() {
+		 return this.programmingLanguage;
+	 }
+	 
+	 public void setProgrammingLanguage(String programmingLanguage) {
+		 this.programmingLanguage = programmingLanguage;
+	 }
+	 
+	 public String getProfessionalField() {
+		 return this.professionalField;
+	 }
+	 
+	 public void setProfessionalField(String professionalField) {
+		 this.professionalField = professionalField;
+	 }
+	 
 
 }

@@ -32,20 +32,31 @@ public class PostManager {
 		 Post first_dummy_post = new Post();
 		 first_dummy_post.setParentId(1);
 		 first_dummy_post.setPostId(1);
-		 first_dummy_post.setUsername("iv97n");
-		 first_dummy_post.setDescription("Marcelo putero");
+		 first_dummy_post.setUsername("iv97n_admin");
+		 first_dummy_post.setDescription("Welcome to our Software Engineering project, where we are developing a web application similar to Twitter, but specifically designed for programmers. This platform will allow developers to share ideas, code, and discuss programming-related topics in a more focused and technical manner. Our goal is to create an active and useful community for programmers of all levels, where they can learn from each other, collaborate on projects, and stay updated with the latest trends in technology and software development.\r\n"
+		 		+ "\r\n"
+		 		+ "Thank you for your interest in our project! Feel free to explore, contribute, and become a part of this exciting community of programmers.");
 		 first_dummy_post.setPostDateTime(new Timestamp(1687441845000L));
-		 
-		 Post second_dummy_post = new Post();
-		 second_dummy_post.setParentId(1);
-		 second_dummy_post.setPostId(1);
-		 second_dummy_post.setUsername("iv97n");
-		 second_dummy_post.setDescription("Pablo Barrios seleccion");
-		 second_dummy_post.setPostDateTime(new Timestamp(1687441845000L));
+		 first_dummy_post.setUrl("https://github.com/U198734/HeapOverFlow");
+		 first_dummy_post.setProgrammingLanguage("Python");
+		 first_dummy_post.setProfessionalField("Machine Learning");
 		 
 		 l.add(first_dummy_post);
-		 l.add(second_dummy_post);
-
+		 
+		 for(int i=0; i<5; i++) {
+			 Post second_dummy_post = new Post();
+			 second_dummy_post.setParentId(1);
+			 second_dummy_post.setPostId(1);
+			 second_dummy_post.setUsername("iv97n_admin");
+			 second_dummy_post.setDescription("This is a sample tweet");
+			 second_dummy_post.setPostDateTime(new Timestamp(1687441845000L));
+			 second_dummy_post.setUrl("https://www.youtube.com/watch?v=xm3YgoEiEDc");
+			 second_dummy_post.setProgrammingLanguage("Python");
+			 second_dummy_post.setProfessionalField("Machine Learning");
+			 
+			 l.add(second_dummy_post);
+		 }
+	
 		return  l;
 	}
 	
