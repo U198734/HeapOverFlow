@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 import models.Post;
 import managers.PostManager;
@@ -36,11 +37,25 @@ public class PostsController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PostManager postManager = new PostManager();
-		List<Post> posts = postManager.get_dummy_posts();
-		request.setAttribute("posts", posts);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewPostsNotLogged.jsp");
-		dispatcher.forward(request, response);
+		HttpSession session = request.getSession(false);
+
+		if (session==null || session.getAttribute("user_name")==null) {
+			PostManager postManager = new PostManager();
+			List<Post> posts = postManager.getPublicPosts();
+			request.setAttribute("posts", posts);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("ViewPostsNotLogged.jsp");
+			dispatcher.forward(request, response);
+		}
+		else {
+			PostManager postManager = new PostManager();
+			List<Post> posts = postManager.getPrivatePosts();
+			request.setAttribute("posts", posts);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("ViewFeedPosts.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		
+		
 	}
 
 	/**
