@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import java.sql.Timestamp;
 
 import models.Post;
@@ -32,6 +35,35 @@ public class PostManager {
         }
     }
     
+
+    public List<Post> getMyOwnPosts(HttpSession session) { // esto necesitaría algo de la session
+        String currentUsername = (String) session.getAttribute("user_name"); 
+        
+        String query = "SELECT * FROM posts WHERE user_id = (SELECT id FROM users WHERE username = ?) ORDER BY postdatetime DESC";
+        List<Post> posts = new ArrayList<>();
+        try (PreparedStatement statement = db.prepareStatement(query)) {
+            statement.setString(1, currentUsername);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Post post = new Post();
+                    
+                    post.setParentId(rs.getInt("pid"));
+                    post.setPostId(rs.getInt("id"));
+                    post.setUsername(getUsername(rs.getInt("user_id")));
+                    post.setDescription(rs.getString("post_description"));
+                    post.setPostDateTime(rs.getTimestamp("postdatetime"));
+                    post.setUrl(rs.getString("url"));
+                    post.setProgrammingLanguage(rs.getString("programming_language"));
+                    post.setProfessionalField(rs.getString("professional_field"));
+                    
+                    posts.add(post);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return posts;
+    }
     
     public List<Post> getPublicPosts() {
         String query = "SELECT * FROM posts WHERE is_public = true ORDER BY postdatetime DESC";
