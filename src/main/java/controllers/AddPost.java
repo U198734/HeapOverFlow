@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
+
+import managers.ManageTweets;
 
 
 
@@ -48,6 +51,20 @@ public class AddPost extends HttpServlet {
          * YOUR CODE HERE
          * - ADD A NEW POST TO THE DATABASE USING THE SPECIFIED PARAMETERS
          */
+        
+		HttpSession session = request.getSession(false);
+        Integer userId = (Integer) session.getAttribute("user_id");
+        ManageTweets manageTweets = new ManageTweets();
+        
+        if (userId != null) {
+        	manageTweets.addPost(userId,content,url,programmingLanguage, professionalField, null, true); // la última variable es is_public, he puesto que todas lo son porque solo puedes comentar en public posts
+        
+            // Send a success response back to the client
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            // Handle the error: either postId or userId is missing or session is inactive
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
 	}
 
 }
