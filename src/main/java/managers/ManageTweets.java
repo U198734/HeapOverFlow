@@ -90,5 +90,107 @@ public class ManageTweets {
 		return  l;
 	}
 	
-	
+    public void addUpvote(Integer post_id, Integer user_id) {
+
+        String query = "INSERT INTO upvotes (user_id, post_id) VALUES (?, ?)";
+
+        PreparedStatement statement = null;
+        try {
+            statement = db.prepareStatement(query);
+            statement.setInt(1, post_id);
+            statement.setInt(2, user_id);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void addFollows(Integer user_id, Integer fuser_id) {
+        String query = "INSERT INTO follows (user_id, fuser_id) VALUES (?, ?)";
+        PreparedStatement statement = null;
+        try {
+            statement = db.prepareStatement(query);
+            statement.setInt(1, user_id);
+            statement.setInt(2, user_id);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+
+    public void addComment(Integer user_id, String comment, Integer pid) {
+        String query = "INSERT INTO posts (is_public, user_id, postdatetime, post_description, url, pid) VALUES (?, ?, NOW(), ?, NULL, ?)";
+        try (PreparedStatement statement = db.prepareStatement(query)) {
+            statement.setBoolean(1, true); // si se puede añadir un comment es porque son públicos, por tanto todos son true
+            statement.setInt(2, user_id);
+            statement.setString(3, comment);
+            statement.setInt(4, pid);
+            
+            System.out.println("Comment added successfully!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+    }
+    
+    public void addPost(Integer user_id, String postDescription, String url, String programming_language, String professional_field, Integer pid, boolean isPublic) {
+        String query = "INSERT INTO posts (is_public, user_id, postdatetime, post_description, url, programming_language, professional_field, pid) VALUES (?, ?, NOW(), ?, ?, ?)";
+        try (PreparedStatement statement = db.prepareStatement(query)) {
+            statement.setBoolean(1, isPublic);
+            statement.setInt(2, user_id);
+            statement.setString(3, postDescription);
+            statement.setString(4, url);
+            statement.setString(5, programming_language);
+            statement.setString(6, professional_field);
+            statement.setInt(7, pid);
+            
+            statement.executeUpdate();
+            System.out.println("Post added successfully!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void deletePost(Integer post_id) {
+        String query = "DELETE FROM posts WHERE id = ?";
+        try (PreparedStatement statement = db.prepareStatement(query)) {
+            statement.setInt(1, post_id);
+            
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Post deleted successfully!");
+            } else {
+                System.out.println("No post found with post_id " + post_id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public Integer getUserIdFromPostId(Integer post_id) {
+        String query = "SELECT user_id FROM posts WHERE id = ?";
+        PreparedStatement statement = null;
+        
+        try {
+        	statement = db.prepareStatement(query);
+        	statement.setInt(1, post_id);
+            
+        	ResultSet rs = statement.executeQuery();
+
+        	
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        
+        return rs;
+    }
+
+
+
 }
