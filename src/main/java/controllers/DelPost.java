@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
+import managers.ManageTweets;
+
+import ManageTweets.java;
 
 
 /**
@@ -42,8 +46,29 @@ public class DelPost extends HttpServlet {
 		/*
 		 * YOUR CODE HERE
 		 * - BORRAR POST DE LA BASE DE DATOS
-		 * - COMPROBAR QUE EL USERID DE LA SESION CONCUERDA CON LA PERSONA QUE CREÓ EL POST
+		 * - COMPROBAR QUE EL USERID DE LA SESION CONCUERDA CON LA PERSONA QUE CREï¿½ EL POST
 		 */
+		
+		HttpSession session = request.getSession(false);
+        Integer userId = (Integer) session.getAttribute("user_id");
+        ManageTweets manageTweets = new ManageTweets();
+        
+
+        if (postId != null && userId != null) {
+        	Integer userIdFromPostId = manageTweets.getUserIdFromPostId(Integer.parseInt(postId));
+        	if (userIdFromPostId == userId) {
+        		manageTweets.deletePost(Integer.parseInt(postId));
+        	}
+        	else {
+        		System.out.println("userIdFromPostId and userId from session do not match");
+        	}
+            // Send a success response back to the client
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            // Handle the error: either postId or userId is missing or session is inactive
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
 		
 	}
 
