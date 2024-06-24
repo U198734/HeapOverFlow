@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
+
+import managers.ManageTweets;
 
 
 
@@ -45,9 +48,22 @@ public class CommentPost extends HttpServlet {
         
         /*
          * YOUR CODE HERE
-         * - AÑADIR COMENTARIO A LA BASE DE DATOS COMO UN POST MAS
+         * - Aï¿½ADIR COMENTARIO A LA BASE DE DATOS COMO UN POST MAS
          * - EL PARENTID DEL NUEVO POST SERA EL POSTID DEL COMENTARIO ORIGINAL "postId"
          */
+		HttpSession session = request.getSession(false);
+        Integer userId = (Integer) session.getAttribute("user_id");
+        ManageTweets manageTweets = new ManageTweets();
+        
+        if (userId != null) {
+        	manageTweets.addComment(userId,comment,Integer.parseInt(postId));
+        
+            // Send a success response back to the client
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            // Handle the error: either postId or userId is missing or session is inactive
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
 		
 	}
 
