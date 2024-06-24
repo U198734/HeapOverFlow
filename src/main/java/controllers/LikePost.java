@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
+import managers.PostManager;
 
+import managers.ManageTweets;
+import managers.ManageTweets;
 
 /**
  * Servlet implementation class MenuController
@@ -41,11 +45,23 @@ public class LikePost extends HttpServlet {
 		
 		/*
 		 * YOUR CODE HERE
-		 * - COGER LA ID DEL USUARIO QUE HA RELIZADO LA ACCIÓN A PARTIR DE LA SESIÓN
-		 * - GUARDAR EN LA BASE DE DATOS LA INTERACCIÓN "LIKE" ENTRE POST Y USUARIO
+		 * - COGER LA ID DEL USUARIO QUE HA RELIZADO LA ACCIï¿½N A PARTIR DE LA SESIï¿½N
+		 * - GUARDAR EN LA BASE DE DATOS LA INTERACCIï¿½N "LIKE" ENTRE POST Y USUARIO
 		 * - TEN EN CUENTA QUE SOLO PODRIAN REALIZAR POSTS A ESTE ENDPOINT USUARIOS CON SESION ACTIVA, ES DECIR, LOS POSTS DE UNREGISTERED USERS DEBES DE CAPTURARLOS I IGNORARLOS IF(...) PASS
 		 */
-		
-	}
+        HttpSession session = request.getSession(false);
+        Integer userId = (Integer) session.getAttribute("user_id");
+        ManageTweets manageTweets = new ManageTweets();
 
+
+        if (postId != null && userId != null) {
+        	manageTweets.addUpvote(Integer.parseInt(postId), userId);
+            
+            // Send a success response back to the client
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            // Handle the error: either postId or userId is missing or session is inactive
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
 }
