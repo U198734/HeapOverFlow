@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Timestamp;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSession;
+import models.Post;
+import org.apache.commons.beanutils.BeanUtils;
 
 import managers.ManageTweets;
-
-
+import models.User;
 
 /**
  * Servlet implementation class MenuController
@@ -42,7 +45,7 @@ public class AddPost extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
         
-        String content = request.getParameter("content"); // TESTED, DO NOT MODIFY
+        String description = request.getParameter("description"); // TESTED, DO NOT MODIFY
         String url = request.getParameter("url"); // TESTED, DO NOT MODIFY
         String programmingLanguage = request.getParameter("programmingLanguage"); // TESTED, DO NOT MODIFY
         String professionalField = request.getParameter("professionalField"); // TESTED, DO NOT MODIFY
@@ -52,19 +55,33 @@ public class AddPost extends HttpServlet {
          * - ADD A NEW POST TO THE DATABASE USING THE SPECIFIED PARAMETERS
          */
         
-		HttpSession session = request.getSession(false);
-        Integer userId = (Integer) session.getAttribute("user_id");
+        HttpSession session = request.getSession(false);
         ManageTweets manageTweets = new ManageTweets();
+
+		Integer userId = manageTweets.getUserIdByUsername((String) session.getAttribute("user_name"));
+        System.out.println(userId);
         
-        if (userId != null) {
-        	manageTweets.addPost(userId,content,url,programmingLanguage, professionalField, null, true); // la última variable es is_public, he puesto que todas lo son porque solo puedes comentar en public posts
+         //User user = (User) session.getAttribute("user");
+         //System.out.println(user);
+         Post post = new Post();
+         try {
+			
+			if (session != null || userId != null)
+				BeanUtils.populate(post, request.getParameterMap());
+				post.setUserId(userId);
+				post.setIs_public(false);
+				post.setParentId(1); // all posts are related to a parent id 1, only comments to other posts
+				post.setUsername((String) session.getAttribute("user_name"));
+				post.setPostDateTime(new Timestamp(System.currentTimeMillis()));
+
+				manageTweets.addPost(post);
+				manageTweets.finalize();
+
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
         
-            // Send a success response back to the client
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            // Handle the error: either postId or userId is missing or session is inactive
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
 	}
 
 }
