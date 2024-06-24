@@ -121,7 +121,7 @@ public class PostManager {
     public void addPost(Post post) {
         String query = "INSERT INTO posts (is_public, user_id, postdatetime, post_description, url, programmingLanguage, professionalField, pid) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = db.prepareStatement(query)) {
-            statement.setBoolean(1, post.getIsPublic());
+            statement.setBoolean(1, post.getIs_public());
             statement.setInt(2, post.getUserId());
             statement.setTimestamp(3, post.getPostDateTime());
             statement.setString(4, post.getDescription());
@@ -148,7 +148,7 @@ public class PostManager {
     public void updatePost(Post post) {
         String query = "UPDATE posts SET is_public = ?, user_id = ?, postdatetime = ?, post_description = ?, url = ?, programmingLanguage = ?, professionalField = ?, pid = ? WHERE id = ?";
         try (PreparedStatement statement = db.prepareStatement(query)) {
-            statement.setBoolean(1, post.getIsPublic());
+            statement.setBoolean(1, post.getIs_public());
             statement.setInt(2, post.getUserId());
             statement.setTimestamp(3, post.getPostDateTime());
             statement.setString(4, post.getDescription());

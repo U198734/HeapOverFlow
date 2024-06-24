@@ -24,6 +24,26 @@ public class Post implements java.io.Serializable {
 	 public Post() {
 	 }
 	 
+     // Getter para is_public
+     public boolean getIs_public() {
+         return is_public;
+     }
+
+     // Setter para is_public
+     public void setIs_public(boolean is_public) {
+         this.is_public = is_public;
+     }
+
+     // Getter para userId
+     public int getUserId() {
+         return userId;
+     }
+
+     // Setter para userId
+     public void setUserId(int userId) {
+         this.userId = userId;
+     }
+    
 	 public Integer getParentId() {
 		 return this.parentId;
 	 }

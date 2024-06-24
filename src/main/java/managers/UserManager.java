@@ -1,6 +1,7 @@
 package managers;
 
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -195,10 +196,6 @@ public class UserManager {
     }
 
     
-    
-   
-    
-    
     public boolean isLoginComplete(User user) {
         boolean isComplete = true;
 
@@ -311,27 +308,31 @@ public class UserManager {
 	    }
 	    return user;
 	}
-
-	// ACTUALIZAR DATOS DE USUARIO
 	
 	public boolean updateUser(User user) {
-	    String query = "UPDATE usuaris SET mail = ?, gender = ?, programming_language = ?, professional_field = ? WHERE user_name = ?";
-	    PreparedStatement statement = null;
-	    try {
-	        statement = db.prepareStatement(query);
-	        statement.setString(1, user.getMail());
-	        statement.setString(2, user.getGender());
-	        statement.setString(3, user.getProgramming_language());
-	        statement.setString(4, user.getProfessional_field());
-	        statement.setString(5, user.getUser_name());
-	        int rowsUpdated = statement.executeUpdate();
-	        statement.close();
-	        return rowsUpdated > 0;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        return false;
-	    }
-	}
+        DBManager dbManager = new DBManager();
+        String query = "UPDATE usuaris SET mail = ?, gender = ?, programming_language = ?, professional_field = ? WHERE user_name = ?";
+        
+        try {
+            PreparedStatement stmt = dbManager.prepareStatement(query);
+            stmt.setString(1, user.getMail());
+            stmt.setString(2, user.getGender());
+            stmt.setString(3, user.getProgramming_language());
+            stmt.setString(4, user.getProfessional_field());
+            stmt.setString(5, user.getUser_name());
+
+            int rowsUpdated = stmt.executeUpdate();
+            stmt.close();
+            dbManager.finalize();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
 	
 	
 }

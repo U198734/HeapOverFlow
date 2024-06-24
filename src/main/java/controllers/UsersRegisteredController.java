@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import managers.UserManager;
 import models.User;
 
@@ -70,11 +72,30 @@ public class UsersRegisteredController extends HttpServlet {
             if (userName != null) {
                 manager.deleteUserByUserName(userName);
                 response.sendRedirect("UsersRegisteredController");
-                //RequestDispatcher dispatcher = request.getRequestDispatcher("UsersRegisteredController");
-                //dispatcher.forward(request, response);
             }
-        } 
         
+	    } else if ("edit".equals(action)) {
+	        String user_name = request.getParameter("user_name");
+	        if (user_name != null) {
+	            User user = manager.getUserInfo(user_name);
+	            request.setAttribute("user", user);
+	            request.setAttribute("menu", "ViewMenuLoggedAdmin.jsp");
+	            request.setAttribute("content", "ViewEditUser.jsp");
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+	            dispatcher.forward(request, response);
+	        }
+	    } else if ("update".equals(action)) {
+	        System.out.println("Entering update block"); // Debugging line
+	        User user = new User();
+	        try {
+	            BeanUtils.populate(user, request.getParameterMap());
+	            System.out.println("Updating user: " + user.getUser_name()); // Debugging line
+	            manager.updateUser(user);
+	            response.sendRedirect("UsersRegisteredController");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+    }
     }
 
 }
