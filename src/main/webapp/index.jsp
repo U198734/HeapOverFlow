@@ -143,13 +143,13 @@ $(document).on("click", ".commentPost", function(event) {
 
 		$(document).on("click", "#addPost", function(event) {
 		    // Gather data from input fields
-		    var content = $("#postContent").text().trim();
+		    var description = $("#postContent").text().trim();
 		    var url = $("#postUrl").val().trim();
 		    var programmingLanguage = $("#programmingLanguage").val();
 		    var professionalField = $("#professionalField").val();
 
 		    // Validate content
-		    if (content === "") {
+		    if (description === "") {
 		        alert("Post content cannot be empty.");
 		        return;
 		    }
@@ -172,7 +172,7 @@ $(document).on("click", ".commentPost", function(event) {
 
 		    // Prepare data for POST request
 		    var postData = {
-		        content: content,
+		        description: description,
 		        url: url,
 		        programmingLanguage: programmingLanguage,
 		        professionalField: professionalField
@@ -185,7 +185,7 @@ $(document).on("click", ".commentPost", function(event) {
 		            console.log("Post added successfully:", response);
 		            
 		            // Reload timeline or perform any other action
-		            $("#content").load("GetOwnTimeline");
+		            $("#content").load("ViewFeedLogged.jsp");
 		        })
 		        .fail(function(jqXHR, textStatus, errorThrown) {
 		            // Handle error response
