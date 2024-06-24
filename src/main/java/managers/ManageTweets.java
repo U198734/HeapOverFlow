@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Post;
 import models.Tweet;
 import utils.DBManager;
 
@@ -120,7 +121,25 @@ public class ManageTweets {
         }
     }
     
+    public int getUserIdByUsername(String userName) {
+        int userId = -1;
+        String query = "SELECT user_id FROM usuaris WHERE user_name = ?";
+        DBManager dbManager = new DBManager();
 
+        try (
+        	PreparedStatement statement = dbManager.prepareStatement(query)) {
+        	statement.setString(1, userName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    userId = resultSet.getInt("user_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return userId;
+    }
     public void addComment(Integer user_id, String comment, Integer pid) {
         String query = "INSERT INTO posts (is_public, user_id, postdatetime, post_description, url, pid) VALUES (?, ?, NOW(), ?, NULL, ?)";
         try (PreparedStatement statement = db.prepareStatement(query)) {
@@ -136,16 +155,17 @@ public class ManageTweets {
         } 
     }
     
-    public void addPost(Integer user_id, String postDescription, String url, String programming_language, String professional_field, Integer pid, boolean isPublic) {
-        String query = "INSERT INTO posts (is_public, user_id, postdatetime, post_description, url, programming_language, professional_field, pid) VALUES (?, ?, NOW(), ?, ?, ?)";
+    public void addPost(Post post) {
+        String query = "INSERT INTO posts (is_public, user_id, postdatetime, post_description, url, programming_language, professional_field, pid) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = db.prepareStatement(query)) {
-            statement.setBoolean(1, isPublic);
-            statement.setInt(2, user_id);
-            statement.setString(3, postDescription);
-            statement.setString(4, url);
-            statement.setString(5, programming_language);
-            statement.setString(6, professional_field);
-            statement.setInt(7, pid);
+            statement.setBoolean(1, post.getIs_public());
+            statement.setInt(2, post.getUserId());
+            statement.setTimestamp(3, post.getPostDateTime());
+            statement.setString(4, post.getDescription());
+            statement.setString(5, post.getUrl());
+            statement.setString(6, post.getProgrammingLanguage());
+            statement.setString(7, post.getProfessionalField());
+            statement.setInt(8, post.getParentId());
             
             statement.executeUpdate();
             System.out.println("Post added successfully!");
@@ -173,23 +193,23 @@ public class ManageTweets {
         }
     }
     
-    public Integer getUserIdFromPostId(Integer post_id) {
+  /*  public Integer getUserIdFromPostId(Integer post_id) {
         String query = "SELECT user_id FROM posts WHERE id = ?";
         PreparedStatement statement = null;
-        
+        ResultSet rs = null;
         try {
         	statement = db.prepareStatement(query);
         	statement.setInt(1, post_id);
             
-        	ResultSet rs = statement.executeQuery();
+        	rs = statement.executeQuery();
 
         	
         } catch (SQLException e) {
             e.printStackTrace();
         } 
         
-        return rs;
-    }
+        return (Integer) rs;
+    }*/
 
 
 
