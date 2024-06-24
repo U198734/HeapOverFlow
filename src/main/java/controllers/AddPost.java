@@ -31,15 +31,23 @@ public class AddPost extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewRegisterForm.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+        response.setContentType("text/plain");
+        
+        String content = request.getParameter("content"); // TESTED, DO NOT MODIFY
+        String url = request.getParameter("url"); // TESTED, DO NOT MODIFY
+        String programmingLanguage = request.getParameter("programmingLanguage"); // TESTED, DO NOT MODIFY
+        String professionalField = request.getParameter("professionalField"); // TESTED, DO NOT MODIFY
+
+        /*
+         * YOUR CODE HERE
+         * - ADD A NEW POST TO THE DATABASE USING THE SPECIFIED PARAMETERS
+         */
 	}
 
 }

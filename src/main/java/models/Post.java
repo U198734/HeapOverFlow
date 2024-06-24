@@ -1,5 +1,7 @@
 package models;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 // ACABAR DE IMPLEMENTAR GETTERS Y SETTERS. CLASE DE REFERENCIA EN EL TEMPLATE Tweet.java
@@ -20,8 +22,10 @@ public class Post implements java.io.Serializable {
 	 private String programmingLanguage;
 	 private String professionalField;
 	 private Timestamp postDateTime;
+	 private List<Post> comments;
 
 	 public Post() {
+		 this.comments = new ArrayList<>();
 	 }
 	 
      // Getter para is_public
@@ -107,6 +111,19 @@ public class Post implements java.io.Serializable {
 	 public void setProfessionalField(String professionalField) {
 		 this.professionalField = professionalField;
 	 }
+	 
+	 public List<Post> getComments() {
+		 return this.comments;
+	 }
+	 
+	 public void setComments(List<Post> comments) {
+		 this.comments = comments;
+	 }
+	 
+	    // Add a comment to the list of comments
+	 public void addComment(Post comment) {
+	        this.comments.add(comment);
+	    }
 	 
 
 }

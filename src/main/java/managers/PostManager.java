@@ -162,40 +162,41 @@ public class PostManager {
             e.printStackTrace();
         }
     }
-    
-	public List<Post> get_dummy_posts() {
-		 List<Post> l = new ArrayList<Post>();
-		 
-		 Post first_dummy_post = new Post();
-		 first_dummy_post.setParentId(1);
-		 first_dummy_post.setPostId(1);
-		 first_dummy_post.setUsername("iv97n_admin");
-		 first_dummy_post.setDescription("Welcome to our Software Engineering project, where we are developing a web application similar to Twitter, but specifically designed for programmers. This platform will allow developers to share ideas, code, and discuss programming-related topics in a more focused and technical manner. Our goal is to create an active and useful community for programmers of all levels, where they can learn from each other, collaborate on projects, and stay updated with the latest trends in technology and software development.\r\n"
-		 		+ "\r\n"
-		 		+ "Thank you for your interest in our project! Feel free to explore, contribute, and become a part of this exciting community of programmers.");
-		 first_dummy_post.setPostDateTime(new Timestamp(1687441845000L));
-		 first_dummy_post.setUrl("https://github.com/U198734/HeapOverFlow");
-		 first_dummy_post.setProgrammingLanguage("Python");
-		 first_dummy_post.setProfessionalField("Machine Learning");
-		 
-		 l.add(first_dummy_post);
-		 
-		 for(int i=0; i<5; i++) {
-			 Post second_dummy_post = new Post();
-			 second_dummy_post.setParentId(1);
-			 second_dummy_post.setPostId(1);
-			 second_dummy_post.setUsername("iv97n_admin");
-			 second_dummy_post.setDescription("This is a sample tweet");
-			 second_dummy_post.setPostDateTime(new Timestamp(1687441845000L));
-			 second_dummy_post.setUrl("https://www.youtube.com/watch?v=xm3YgoEiEDc");
-			 second_dummy_post.setProgrammingLanguage("Python");
-			 second_dummy_post.setProfessionalField("Machine Learning");
-			 
-			 l.add(second_dummy_post);
-		 }
 	
-		return l;
-	}
+	public List<Post> get_dummy_posts() {
+        List<Post> posts = new ArrayList<>();
+
+        // Main post
+        Post mainPost = new Post();
+        mainPost.setPostId(33);
+        mainPost.setUsername("iv97n_admin");
+        mainPost.setDescription("Welcome to our Software Engineering project, where we are developing a web application similar to Twitter, but specifically designed for programmers. This platform will allow developers to share ideas, code, and discuss programming-related topics in a more focused and technical manner. Our goal is to create an active and useful community for programmers of all levels, where they can learn from each other, collaborate on projects, and stay updated with the latest trends in technology and software development.\r\n"
+                        + "\r\n"
+                        + "Thank you for your interest in our project! Feel free to explore, contribute, and become a part of this exciting community of programmers.");
+        mainPost.setPostDateTime(new Timestamp(1687441845000L));
+        mainPost.setUrl("https://github.com/U198734/HeapOverFlow");
+        mainPost.setProgrammingLanguage("Python");
+        mainPost.setProfessionalField("Machine Learning");
+
+        // Add comments (child posts)
+        for (int i = 0; i < 2; i++) {
+            Post comment = new Post();
+            comment.setParentId(33);  // ParentId should match the postId of the main post
+            comment.setPostId(i + 1);  // Unique postId for each comment
+            comment.setUsername("iv97n_admin");
+            comment.setDescription("This is a sample comment " + (i + 1));
+            comment.setPostDateTime(new Timestamp(1687441845000L));
+
+            // Add comment to main post's list of comments
+            mainPost.addComment(comment);
+        }
+
+        // Add the main post to the list of posts
+        posts.add(mainPost);
+
+        return posts;
+    }
+	
 	
     // Dummy method to get username by user_id, implement accordingly
     private String getUsername(int userId) {

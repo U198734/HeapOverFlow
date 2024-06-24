@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MenuController
  */
-@WebServlet("/LikePost")
-public class LikePost extends HttpServlet {
+@WebServlet("/CommentPost")
+public class CommentPost extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LikePost() {
+    public CommentPost() {
         super();
     }
 
@@ -30,6 +30,7 @@ public class LikePost extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	}
 
 	/**
@@ -37,14 +38,16 @@ public class LikePost extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String postId = request.getParameter("id"); //COMRPOBADO QUE FUNCIONA, NO TOCAR
-		
-		/*
-		 * YOUR CODE HERE
-		 * - COGER LA ID DEL USUARIO QUE HA RELIZADO LA ACCIÓN A PARTIR DE LA SESIÓN
-		 * - GUARDAR EN LA BASE DE DATOS LA INTERACCIÓN "LIKE" ENTRE POST Y USUARIO
-		 * - TEN EN CUENTA QUE SOLO PODRIAN REALIZAR POSTS A ESTE ENDPOINT USUARIOS CON SESION ACTIVA, ES DECIR, LOS POSTS DE UNREGISTERED USERS DEBES DE CAPTURARLOS I IGNORARLOS IF(...) PASS
-		 */
+        String postId = request.getParameter("id"); // COMPROBADO QUE FUNCIONA, NO TOCAR
+        String comment = request.getParameter("comment"); // COMPROBADO QUE FUNCIONA, NO TOCAR
+        
+        System.out.println(comment);
+        
+        /*
+         * YOUR CODE HERE
+         * - AÑADIR COMENTARIO A LA BASE DE DATOS COMO UN POST MAS
+         * - EL PARENTID DEL NUEVO POST SERA EL POSTID DEL COMENTARIO ORIGINAL "postId"
+         */
 		
 	}
 

@@ -41,14 +41,17 @@ public class PostsController extends HttpServlet {
 
 		if (session==null || session.getAttribute("user_name")==null) {
 			PostManager postManager = new PostManager();
-			List<Post> posts = postManager.getPublicPosts();
+			// List<Post> posts = postManager.getPublicPosts();
+			List<Post> posts = postManager.get_dummy_posts();
 			request.setAttribute("posts", posts);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("ViewPostsNotLogged.jsp");
+			// RequestDispatcher dispatcher = request.getRequestDispatcher("ViewPostsNotLogged.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("ViewFeedPosts.jsp");
 			dispatcher.forward(request, response);
 		}
 		else {
 			PostManager postManager = new PostManager();
-			List<Post> posts = postManager.getPrivatePosts();
+			//List<Post> posts = postManager.getPrivatePosts();
+			List<Post> posts = postManager.get_dummy_posts();
 			request.setAttribute("posts", posts);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("ViewFeedPosts.jsp");
 			dispatcher.forward(request, response);

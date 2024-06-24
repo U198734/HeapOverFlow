@@ -19,11 +19,7 @@
         </div>
         <!-- Buttons Section -->
         <div style="margin-top: 10px;">
-            <button class="w3-button w3-small w3-theme-d1 w3-margin-right">
-            <i class="fa fa-thumbs-up"></i> Like</button>
-            <button class="w3-button w3-small w3-theme-d2 w3-margin-right">
-            <i class="fa fa-comment"></i> Comment</button>
-            <button class="w3-button w3-small w3-red">
+            <button class="delPost w3-button w3-small w3-red">
             <i class="fa fa-trash"></i> Delete</button>
         </div>
         <!-- Styled Repository Link -->
