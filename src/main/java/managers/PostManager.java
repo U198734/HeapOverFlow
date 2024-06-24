@@ -200,7 +200,17 @@ public class PostManager {
 	
     // Dummy method to get username by user_id, implement accordingly
     private String getUsername(int userId) {
-        // Implementation to get username from user_id
-        return "dummy_username";
+        String query = "SELECT user_name FROM usuaris WHERE user_id = ?";
+        try (PreparedStatement statement = db.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("user_name");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Unknown User";
     }
 }
