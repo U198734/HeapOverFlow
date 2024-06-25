@@ -121,6 +121,26 @@ function editUser(user_name) {
                 }
             });
         }
+		function deleteUser(user_name) {
+		    if (confirm('Are you sure you want to delete yor account, ' + user_name + '?')) {
+		        $.ajax({
+		            url: 'PerfilController',
+		            type: 'POST',
+		            data: {
+		                action: 'delete',
+		                user_name: user_name
+		            },
+		            success: function(response) {
+		                // Refresh the list of users
+		                $(content).html(response);
+		            },
+		            error: function(xhr, status, error) {
+		                alert('Error deleting user: ' + error);
+		            }
+		        });
+		    }
+		}
+
 </script>
 <body>
     <div class="container">
@@ -131,7 +151,9 @@ function editUser(user_name) {
             <p><span>Gender:</span> ${user.gender}</p>
             <p><span>Programming Language:</span> ${user.programming_language}</p>
             <p><span>Professional Field:</span> ${user.professional_field}</p>
-            <button class="w3-button w3-red" onclick="editUser('${user.user_name}')">Edit</button>
+            <button class="w3-button w3-blue" onclick="editUser('${user.user_name}')">Edit</button>
+            <button class="w3-button w3-red" onclick="deleteUser('${user.user_name}')">Delete Account</button>
+            
         </div>
     </div>
 </body>
