@@ -68,6 +68,12 @@ public class PerfilController extends HttpServlet {
                 dispatcher.forward(request, response);
             }
 		}
+		if ("delete".equals(action)) {
+            String userName = request.getParameter("user_name");
+            manager.deleteUserByUserName(userName);
+            response.sendRedirect("LogoutController");
+            
+        }
 	}
 
 
